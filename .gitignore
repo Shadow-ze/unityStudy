@@ -34,3 +34,9 @@ Desktop.ini
 
 # JetBrains Rider
 .idea/
+
+# 超过 GitHub 100MB 限制的大型二进制资产
+Assets/Arts/Others/Dragon/Dragon.fbx
+Assets/Arts/Common/Reflections/Reflection002.hdr
+Assets/Arts/Common/Reflections/Reflection004.hdr
+Assets/Arts/Common/Reflections/Reflection005.hdr
