@@ -1,0 +1,36 @@
+# Unity 自动生成目录
+/Library/
+/Temp/
+/Logs/
+/UserSettings/
+
+# 构建产物
+/Build/
+/Builds/
+
+# VS/Rider 生成文件
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Unity 元数据备份
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# OS 文件
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# JetBrains Rider
+.idea/
