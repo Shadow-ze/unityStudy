@@ -1,3 +1,7 @@
+# 第三方包（通过 Package Manager 管理）
+/Assets/TextMesh Pro/
+/Assets/TextMesh Pro.meta
+
 # Unity 自动生成目录
 /Library/
 /Temp/
