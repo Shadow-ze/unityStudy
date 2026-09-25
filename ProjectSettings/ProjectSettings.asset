@@ -163,7 +163,8 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.Unity-Technologies.Lighting-Optimisation-Tutorial
+    Android: com.DefaultCompany.Framework
+    Standalone: com.DefaultCompany.Framework
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -429,8 +430,8 @@ PlayerSettings:
     m_APIs: 10000000
     m_Automatic: 1
   - m_BuildTarget: AndroidPlayer
-    m_APIs: 0b00000008000000
-    m_Automatic: 0
+    m_APIs: 0b00000015000000
+    m_Automatic: 1
   m_BuildTargetVRSettings: []
   m_DefaultShaderChunkSizeInMB: 16
   m_DefaultShaderChunkCount: 0

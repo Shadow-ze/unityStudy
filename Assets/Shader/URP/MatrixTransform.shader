@@ -9,6 +9,9 @@ Shader "xianze/URP/MatrixTransform"
         [Header(View)]
         _ViewPos("ViewPos", vector) = (0,0,0,0)
         _ViewTarget("ViewTarget", vector) = (0,0,0,0)
+        [Header(Camera)]
+        [Enum(Orthographic,0,Perspective,1)]_CameraType("CameraType", float) = 1
+        _CameraParas("Size(X) Near(Y) Far(Z) Bili(W)", vector) = (0,0,0,1.777)
 
     }
     SubShader
@@ -43,6 +46,8 @@ Shader "xianze/URP/MatrixTransform"
             half4 _Rotation;
             half4 _ViewPos;
             half4 _ViewTarget;
+            float4 _CameraParas;
+            half _CameraType;
             CBUFFER_END
 
             TEXTURE2D(_MainTex);SAMPLER(sampler_MainTex);
@@ -144,8 +149,70 @@ Shader "xianze/URP/MatrixTransform"
                 // float3 positionVS = TransformWorldToView(positionWS);
                 float3 positionVS = mul(M_viewFinal, float4(positionWS,1));
 
+                //正交投影矩阵
+                //P_clip = [V_clip] * P_world
+
+                
+                float h = _CameraParas.x * 2;
+                float r = _CameraParas.w;
+                float w = h*r;
+                float n = _CameraParas.y;
+                float f = _CameraParas.z;
+
+                float4x4 M_clipOrtho;
+                if(UNITY_NEAR_CLIP_VALUE == -1)
+                {
+                    //opengl(-1,1)
+                    M_clipOrtho = float4x4(
+                    2/w,0,0,0,
+                    0,2/h,0,0,
+                    0,0,2/(n-f),(n+f)/(n-f),
+                    0,0,0,1
+                    );
+                }
+                
+
+                if(UNITY_NEAR_CLIP_VALUE == 1)
+                {
+                    
+                    //DirectX(0,1)
+                    M_clipOrtho = float4x4(
+                    2/w,0,0,0,
+                    0,-2/h,0,0,
+                    0,0,1/(f-n),f/(f-n),
+                    0,0,0,1
+                    );
+                }
+
+
+                //透视相机投影矩阵
+                float4x4 M_clipPerspective;
+                if(UNITY_NEAR_CLIP_VALUE == -1)
+                {
+                    //OpenGl(-1,1)
+                    M_clipPerspective = float4x4(
+                    2*n/w,0,0,0,
+                    0,2*n/h,0,0,
+                    0,0,(n+f)/(n-f),2*n*f/(n-f),
+                    0,0,-1,0
+                    );
+                }
+                if(UNITY_NEAR_CLIP_VALUE == 1)
+                {
+                    //DirectX(0,1)
+                    M_clipPerspective = float4x4(
+                    2*n/w,0,0,0,
+                    0,-2*n/h,0,0,
+                    0,0,f/(f-n),n*f/(f-n),
+                    0,0,-1,0
+                    );
+                }
+
+                float4x4 M_clip = _CameraType ? M_clipPerspective : M_clipOrtho;               //手动将观察空间变换到裁剪空间
+                o.positionCS = mul(M_clip,float4(positionVS,1));
+
                 //观察空间变换到裁剪空间
-                o.positionCS = TransformWViewToHClip(positionVS);
+                // o.positionCS = TransformWViewToHClip(positionVS);
 
                 // o.positionCS = TransformWorldToHClip(v.positionOS);
                

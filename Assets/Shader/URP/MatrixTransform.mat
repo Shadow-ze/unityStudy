@@ -30,10 +30,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _Angle: 0
+    - _CameraType: 1
     m_Colors:
+    - _CameraParas: {r: 3.61, g: 5.55, b: 100, a: 1}
     - _Rotation: {r: 0, g: 0, b: 0, a: 0}
     - _Scale: {r: 1, g: 1, b: 1, a: 1}
     - _Translate: {r: 0, g: 0, b: 0, a: 0}
-    - _ViewPos: {r: -2.36, g: 1.96, b: 3.71, a: 0}
+    - _ViewPos: {r: -1.85, g: 1.96, b: 3.71, a: 0}
     - _ViewTarget: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

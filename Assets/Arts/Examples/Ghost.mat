@@ -33,5 +33,5 @@ Material:
     m_Colors:
     - _Animation: {r: 0, g: 0.37, b: 0.96, a: 0.18}
     - _Fresnel: {r: 2.27, g: 4.45, b: 0.57, a: 0.25}
-    - _FresnelColor: {r: 0.36095157, g: 0.6121251, b: 0.26491395, a: 1}
+    - _FresnelColor: {r: 0.473509, g: 0.58417064, b: 0.3536947, a: 1}
   m_BuildTextureStacks: []

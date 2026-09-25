@@ -2,8 +2,9 @@ Shader "xianze/URP/Checker"
 {
     Properties
     {
-       _Repeat("Repeat", float) = 1
-       _Color("Color", color) = (1,1,1,0)
+        [Enum(UnityEngine.Rendering.CullMode)]_Cull("Cull Mode", int) = 0
+        _Repeat("Repeat", float) = 1
+        _Color("Color", color) = (1,1,1,0)
     }
     SubShader
     {
@@ -13,13 +14,14 @@ Shader "xianze/URP/Checker"
             "RenderType"="Opaque"
         }
         
-        Cull front
+        Cull [_Cull]
 
         Pass
         {
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
+            #pragma multi_compile_fog
             #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
@@ -38,6 +40,7 @@ Shader "xianze/URP/Checker"
                 float2 uv : TEXCOORD0;
                 float4 vertexCS : SV_POSITION;
                 float4 vertexOS : TEXCOORD1;
+                float fogCoord : TEXCOORD2;
             };
 
             CBUFFER_START(UnityPerMaterial)
@@ -51,6 +54,7 @@ Shader "xianze/URP/Checker"
                 o.vertexOS = v.vertexOS;
                 o.vertexCS = TransformObjectToHClip(v.vertexOS);
                 o.uv = v.uv * _Repeat;
+                o.fogCoord = ComputeFogFactor(o.vertexCS.z);
                 return o;
             }
 
@@ -62,6 +66,7 @@ Shader "xianze/URP/Checker"
                 half mask = i.vertexOS.y+0.55;
                 c = mask * checker;
                 c *=_Color;
+                c.rgb = MixFog(c,i.fogCoord);
                 return c;
             }
             ENDHLSL
